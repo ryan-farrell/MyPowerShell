@@ -39,8 +39,8 @@ function Get-PublicIP {
 } # Get-PublicIP
 
 <#
-# Make sure that this module is alway loaded and that alias can be used when my script has been loaded
-# take a param of a dir within an if present delete only that dir not the entire vendor or node module
+# -- TODO --
+# take a param of a dir within and if present delete only that dir not the entire vendor or node_module dir
 # create alias for both deleting a node_module or vendor dir
 #>
 
