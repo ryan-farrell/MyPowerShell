@@ -1,10 +1,23 @@
+# *************************************************************************************************************************************** #
+# DON'T AMEND THIS FILE. THE FILE TO AMEND IS IN $PROFILE  =  C:\Users\<username>\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+# *************************************************************************************************************************************** #
+
 # Load my own custom functions at startup
 $OwnFunctionsDir = "$env:USERPROFILE\Documents\MyPowerShell\functions"
 
-Write-Host "Loading own PowerShell functions from:" -ForegroundColor Green
+Write-Host " Loading my own PowerShell functions from: $OwnFunctionsDir " -ForegroundColor Black -BackgroundColor Cyan
+Get-ChildItem "$OwnFunctionsDir\*.ps1" | ForEach-Object{.$_}
+Write-Host '' # Empty line
+Write-Host '_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
+Write-Host '' # Empty line
 
-Write-Host "$OwnFunctionsDir" -ForegroundColor Blue
+# ****************************************************************************************** #
+# Set Alias for my own Cmdlets (See my own functions in my functions dir = $OwnFunctionsDir) #
+# ****************************************************************************************** #
+Set-Alias -name pubip -Value Get-PublicIP
+Set-Alias -name rmpm -Value Remove-PackMan
+Set-Alias -name uid -Value Get-UnixTime
 
-Get-ChildItem "$OwnFunctionsDir\*.ps1" | %{.$_}
-
-Write-Host ''
+# *************************************************************************************************************************************** #
+# DON'T AMEND THIS FILE. THE FILE TO AMEND IS IN $PROFILE  =  C:\Users\<username>\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
+# *************************************************************************************************************************************** #

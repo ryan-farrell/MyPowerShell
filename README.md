@@ -14,16 +14,20 @@ to create the `profile.ps1` file or open it if it does exist ready to C & P the 
 
 ```powershell
 # Load my own custom functions at startup
-
 $OwnFunctionsDir = "$env:USERPROFILE\Documents\MyPowerShell\functions"
 
-Write-Host "Loading own PowerShell functions from:" -ForegroundColor Green
+Write-Host " Loading my own PowerShell functions from: $OwnFunctionsDir " -ForegroundColor Black -BackgroundColor Cyan
+Get-ChildItem "$OwnFunctionsDir\*.ps1" | ForEach-Object{.$_}
+Write-Host '' # Empty line
+Write-Host '_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
+Write-Host '' # Empty line
 
-Write-Host "$OwnFunctionsDir" -ForegroundColor Blue
-
-Get-ChildItem "$OwnFunctionsDir\*.ps1" | %{.$_}
-
-Write-Host ''
+# ****************************************************************************************** #
+# Set Alias for my own Cmdlets (See my own functions in my functions dir = $OwnFunctionsDir) #
+# ****************************************************************************************** #
+Set-Alias -name pubip -Value Get-PublicIP
+Set-Alias -name rmpm -Value Remove-PackMan
+Set-Alias -name uid -Value Get-UnixTime
 
 ```
 
@@ -37,9 +41,12 @@ Reopen powershell and these functions will now be ready to use. 👍🏼
 
 ## List of My Cmdlets
 
-1. Get-PublicIP
+1. Get-PublicIP - Alias `pubip`
     - Retrieve this systems public IP address
 
-2. Remove-PackMan
+2. Remove-PackMan - Alias `rmpm`
     - Removes package manager of choice either for **composer** or **npm**. *'vendor'* is removed by default or enter *'node'* or *'node_modules'*.
     i.e. `Remove-Packman node`
+
+3. Get-UnixTime - Alias `uid`
+    - Get the time stamp in integer to use as a UID in my code from time to time. Sets to clipboard so I can simply paste wherever.

@@ -41,7 +41,6 @@ function Get-PublicIP {
 <#
 # -- TODO --
 # take a param of a dir within and if present delete only that dir not the entire vendor or node_module dir
-# create alias for both deleting a node_module or vendor dir
 #>
 
 <#
@@ -102,3 +101,39 @@ function Remove-PackMan {
         Remove-Item $packagePath
     }
 } # Remove-PackMan
+
+<#
+.SYNOPSIS
+    Get the current time in unix timestamp
+.DESCRIPTION
+    Simple way to create a UID for purposes in code blocks essentially
+.EXAMPLE
+    Get-UnixTime
+.INPUTS
+    System.string
+.OUTPUTS
+    None
+.NOTES
+    none
+#>
+function Get-UnixTime {
+    [CmdletBinding()]
+    param (
+    )
+    [Alias("uid")]
+
+    # Get the current time in unix
+    $UnixTime =  Get-Date -UFormat %s
+
+    # This will create a UID which is saved to the clipboard
+    Write-Host "The '$UnixTime' UID has been saved to the clipboard."
+
+    if ($UnixTime -gt 0) {
+        # Save to clipboard
+        Set-Clipboard -Value $UnixTime
+    }
+    else {
+        Write-Error "The UID could not be copied to the clipboard. Please try again."
+    }
+
+} # Get-UnixTime
