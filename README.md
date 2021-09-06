@@ -50,3 +50,26 @@ Reopen powershell and these functions will now be ready to use. 👍🏼
 
 3. Get-UnixTime - Alias `uid`
     - Get the time stamp in integer to use as a UID in my code from time to time. Sets to clipboard so I can simply paste wherever.
+---
+## Using "Oh-My-Posh" (Powershell themes)
+
+On first install run following cmds:
+
+```
+Install-Module oh-my-posh -Scope CurrentUser
+Import-Module oh-my-posh
+```
+
+Two following cmds create a list of all available themes
+ - Get-PoshThemes
+ - Get-PoshThemes -list
+
+
+Once selected add this line with them name to load that theme `Set-PoshPrompt -Theme [theme-name]` to the `$OwnFunctionsDir` file so that the selected theme loads when PowerShell loads up
+
+```
+Set-PoshPrompt -Theme slim
+```
+---
+# GIT Commands
+Added a large selection of GIT alias cmds for ease of use in PowerShell. Refer to the `my-functions.ps1` for more details or run the cmd `alias` to see all including the added GIT ones.
