@@ -2,6 +2,7 @@
 # DON'T AMEND THIS FILE. THE FILE TO AMEND IS IN $PROFILE  =  C:\Users\<username>\Documents\PowerShell\Microsoft.PowerShell_profile.ps1
 # *************************************************************************************************************************************** #
 
+# Import-Module posh-git
 # Load my own custom functions at startup
 $OwnFunctionsDir = "$env:USERPROFILE\Documents\MyPowerShell\functions"
 
@@ -17,6 +18,7 @@ Write-Host '' # Empty line
 Set-Alias -name pubip -Value Get-PublicIP
 Set-Alias -name rmpm -Value Remove-PackMan
 Set-Alias -name uid -Value Get-UnixTime
+Set-Alias -name cheat -Value Start-CheatSheet
 
 # *************************************************************************************************************************************** #
 # DON'T AMEND THIS FILE. THE FILE TO AMEND IS IN $PROFILE  =  C:\Users\<username>\Documents\PowerShell\Microsoft.PowerShell_profile.ps1

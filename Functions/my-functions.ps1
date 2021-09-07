@@ -137,3 +137,63 @@ function Get-UnixTime {
     }
 
 } # Get-UnixTime
+
+<#
+.SYNOPSIS
+    Retrieve my Powershell functions file for adding or editing
+.DESCRIPTION
+    Open my Powershell my-functions.ps1 file to edit or add additional functions on the go
+.EXAMPLE
+    Get-MyFunc
+.INPUTS
+    System.string
+.OUTPUTS
+    None
+.NOTES
+    none
+#>
+function Get-MyFunc {
+    [CmdletBinding()]
+    param (
+    )
+
+    # Open the file after checking it exists
+    if (Test-Path "C:\Users\ryanf\Documents\MyPowershell\functions\my-functions.ps1") {
+        # Open File
+        Invoke-Item "C:\Users\ryanf\Documents\MyPowershell\functions\my-functions.ps1"
+    }
+    else {
+        Write-Error "The file could not be found."
+    }
+
+} # Get-MyFunc
+
+<#
+.SYNOPSIS
+    Open my cheat sheet
+.DESCRIPTION
+    Opens my cheat sheet for quick reference of adding to
+.EXAMPLE
+    Start-OpenVPN
+.INPUTS
+    System.string
+.OUTPUTS
+    None
+.NOTES
+    none
+#>
+function Start-CheatSheet {
+    [CmdletBinding()]
+    param (
+    )
+
+    # Open the file after checking it exists
+    if (Test-Path "C:\Users\ryanf\OneDrive\Documents\PowerShell\CheatSheets\cheatsheet.md") {
+        # Open File
+        Invoke-Item "C:\Users\ryanf\OneDrive\Documents\PowerShell\CheatSheets\cheatsheet.md"
+    }
+    else {
+        Write-Error "The file could not be found."
+    }
+
+} # Start-CheatSheet
