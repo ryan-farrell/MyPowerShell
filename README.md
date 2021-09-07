@@ -7,18 +7,23 @@ Clone this git repo to `C:\Users\<username>\Documents\MyPowerShell`
 
 Create a profile in local directory at `C:\Users\<username>\Documents\PowerShell`
 
-use this powershell cmd `if (!(Test-Path (Split-Path $profile))) { mkdir (Split-Path $profile) } ; if (!(Test-Path $profile)) { New-Item $profile -ItemType file } ; code $profile`
+use this powershell cmd
+```
+if (!(Test-Path (Split-Path $profile))) { mkdir (Split-Path $profile) } ; if (!(Test-Path $profile)) { New-Item $profile -ItemType file } ; code $profile
+```
 
 to create the `profile.ps1` file or open it if it does exist ready to C & P the following. The file will open in vs code because of `code` command :
 
 
 ```powershell
+# Import-Module posh-git
+Import-Module oh-my-posh
+
 # Load my own custom functions at startup
 $OwnFunctionsDir = "$env:USERPROFILE\Documents\MyPowerShell\functions"
 
 Write-Host " Loading my own PowerShell functions from: $OwnFunctionsDir " -ForegroundColor Black -BackgroundColor Cyan
 Get-ChildItem "$OwnFunctionsDir\*.ps1" | ForEach-Object{.$_}
-Write-Host '' # Empty line
 Write-Host '_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
 Write-Host '' # Empty line
 
@@ -28,14 +33,20 @@ Write-Host '' # Empty line
 Set-Alias -name pubip -Value Get-PublicIP
 Set-Alias -name rmpm -Value Remove-PackMan
 Set-Alias -name uid -Value Get-UnixTime
+Set-Alias -name cheat -Value Start-CheatSheet
+Set-Alias -name myfunc -Value Get-MyFunc
+
+# ****************************************************** #
+# Using "oh-my-posh" to get a powershell theme and style #
+# ****************************************************** #
+# Update this next line with the theme name to load i.e. Set-PoshPrompt -Theme [theme-name]
+Set-PoshPrompt -Theme slim
 
 ```
 
-
-Add the above to `profile.ps1` and save.
+Add the above to `"C:\Users\ryanf\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"` and save.
 
 Reopen powershell and these functions will now be ready to use. 👍🏼
-
 
 ---
 
@@ -53,10 +64,14 @@ Reopen powershell and these functions will now be ready to use. 👍🏼
 ---
 ## Using "Oh-My-Posh" (Powershell themes)
 
-On first install run following cmds:
+On first install run following cmd:
 
 ```
 Install-Module oh-my-posh -Scope CurrentUser
+```
+
+Add the import line to `"C:\Users\ryanf\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"`.
+```
 Import-Module oh-my-posh
 ```
 

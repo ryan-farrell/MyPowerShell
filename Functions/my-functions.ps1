@@ -158,9 +158,9 @@ function Get-MyFunc {
     )
 
     # Open the file after checking it exists
-    if (Test-Path "C:\Users\ryanf\Documents\MyPowershell\functions\my-functions.ps1") {
+    if (Test-Path "$env:USERPROFILE\Documents\MyPowershell\functions\my-functions.ps1") {
         # Open File
-        Invoke-Item "C:\Users\ryanf\Documents\MyPowershell\functions\my-functions.ps1"
+        Invoke-Item "$env:USERPROFILE\Documents\MyPowershell\functions\my-functions.ps1"
     }
     else {
         Write-Error "The file could not be found."
@@ -188,9 +188,9 @@ function Start-CheatSheet {
     )
 
     # Open the file after checking it exists
-    if (Test-Path "C:\Users\ryanf\OneDrive\Documents\PowerShell\CheatSheets\cheatsheet.md") {
+    if (Test-Path "$env:USERPROFILE\Documents\MyPowerShell\cheatsheets\cheatsheet.md") {
         # Open File
-        Invoke-Item "C:\Users\ryanf\OneDrive\Documents\PowerShell\CheatSheets\cheatsheet.md"
+        Invoke-Item "$env:USERPROFILE\Documents\MyPowerShell\cheatsheets\cheatsheet.md"
     }
     else {
         Write-Error "The file could not be found."
