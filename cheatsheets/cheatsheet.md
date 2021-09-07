@@ -1,6 +1,6 @@
 # CHEAT SHEET
 
-## GIT :rage:
+## GIT :shit:
 
 For a feature be on develop branch and :
 
