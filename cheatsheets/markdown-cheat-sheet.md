@@ -8,7 +8,7 @@ This Markdown cheat sheet provides a quick overview of all the Markdown syntax e
 
 [Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
 
-[Emoji Codes](https://www.webfx.com/tools/emoji-cheat-sheet/)  :smiling_imp:
+[Emoji Codes](https://www.webfx.com/tools/emoji-cheat-sheet/)  :stuck_out_tongue:
 ## Basic Syntax
 
 These are the elements outlined in John Gruber’s original design document. All Markdown applications support these elements.
