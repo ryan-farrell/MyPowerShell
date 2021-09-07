@@ -37,6 +37,7 @@ function Get-PublicIP {
 
     return $publicIP
 } # Get-PublicIP
+Set-Alias -name pubip -Value Get-PublicIP
 
 <#
 # -- TODO --
@@ -101,6 +102,7 @@ function Remove-PackMan {
         Remove-Item $packagePath
     }
 } # Remove-PackMan
+Set-Alias -name rmpm -Value Remove-PackMan
 
 <#
 .SYNOPSIS
@@ -137,6 +139,7 @@ function Get-UnixTime {
     }
 
 } # Get-UnixTime
+Set-Alias -name uid -Value Get-UnixTime
 
 <#
 .SYNOPSIS
@@ -158,15 +161,16 @@ function Get-MyFunc {
     )
 
     # Open the file after checking it exists
-    if (Test-Path "C:\Users\ryanf\Documents\MyPowershell\functions\my-functions.ps1") {
+    if (Test-Path "$env:USERPROFILE\Documents\MyPowershell\functions\my-functions.ps1") {
         # Open File
-        Invoke-Item "C:\Users\ryanf\Documents\MyPowershell\functions\my-functions.ps1"
+        Invoke-Item "$env:USERPROFILE\Documents\MyPowershell\functions\my-functions.ps1"
     }
     else {
         Write-Error "The file could not be found."
     }
 
 } # Get-MyFunc
+Set-Alias -name myfunc -Value Get-MyFunc
 
 <#
 .SYNOPSIS
@@ -188,54 +192,58 @@ function Start-CheatSheet {
     )
 
     # Open the file after checking it exists
-    if (Test-Path "C:\Users\ryanf\OneDrive\Documents\PowerShell\CheatSheets\cheatsheet.md") {
+    if (Test-Path "$env:USERPROFILE\Documents\MyPowerShell\cheatsheets\cheatsheet.md") {
         # Open File
-        Invoke-Item "C:\Users\ryanf\OneDrive\Documents\PowerShell\CheatSheets\cheatsheet.md"
+        Invoke-Item "$env:USERPROFILE\Documents\MyPowerShell\cheatsheets\cheatsheet.md"
     }
     else {
         Write-Error "The file could not be found."
     }
 
 } # Start-CheatSheet
+Set-Alias -name cheat -Value Start-CheatSheet
 
 # ************************#
 # GIT commands & Aliases  #
 # ************************#
-function Get-GitStatus { & git status -sb $args }
+function Get-GitStatus { & git status $args }
 New-Alias -Name gs -Value Get-GitStatus -Force -Option AllScope
 
-function Get-GitAddAll { & git add --all $args }
-New-Alias -Name gaa -Value Get-GitAddAll -Force -Option AllScope
+function Get-GitPull { & git pull }
+New-Alias -Name gp -Value Get-GitPull -Force -Option AllScope
 
 function Get-GitAdd { & git add -- $args }
 New-Alias -Name ga -Value Get-GitAdd -Force -Option AllScope
 
+function Get-GitAddAll { & git add --all $args }
+New-Alias -Name gaa -Value Get-GitAddAll -Force -Option AllScope
+
+# function Get-GitUndoAdd { & git reset --soft $args }
+# New-Alias -Name gua -Value Get-GitUndoAdd -Force -Option AllScope
+
 function Get-GitCommit { & git commit -m $args }
 New-Alias -Name gc -Value Get-GitCommit -Force -Option AllScope
+
+function Get-GitUndoCommit { & git reset --soft HEAD^ $args }
+New-Alias -Name guc -Value Get-GitUndoCommit -Force -Option AllScope
 
 function Get-GitAddAllCommit { & git add --all; git commit -m $args }
 New-Alias -Name gaac -Value Get-GitAddAllCommit -Force -Option AllScope
 
-# function Get-GitCherryPick { & git cherry-pick $args }
-# New-Alias -Name gcp -Value Get-GitCherryPick -Force -Option AllScope
+function Get-GitPublish { & git push -u origin $args }
+New-Alias -Name gpub -Value Get-GitPublish -Force -Option AllScope
 
-# function Get-GitCommitEdit { & git commit -ev $args }
-# New-Alias -Name gce -Value Get-GitCommitEdit -Force -Option AllScope
+function Get-GitPush { & git push --follow-tags $args }
+New-Alias -Name gpsh -Value Get-GitPush -Force -Option AllScope
 
-# function Get-GitCommitAmend { & git commit --amend $args }
-# New-Alias -Name gca -Value Get-GitCommitAmend -Force -Option AllScope
+function Get-GitCommitPush { & git add --all; git commit -m $args; git push }
+New-Alias -Name gcpsh -Value Get-GitCommitPush -Force -Option AllScope
 
 function Get-GitTree { & git log --graph --oneline --decorate $args }
 New-Alias -Name gt -Value Get-GitTree -Force -Option AllScope
 
-function Get-GitPush { & git push --follow-tags $args }
-New-Alias -Name gps -Value Get-GitPush -Force -Option AllScope
 
-function Get-GitCommitPush { & git add --all; git commit -m $args; git push }
-New-Alias -Name gcp -Value Get-GitCommitPush -Force -Option AllScope
 
-# function Get-GitPullRebase { & git pull --rebase $args }
-# New-Alias -Name gpr -Value Get-GitPullRebase -Force -Option AllScope
 
 function Get-GitFetch { & git fetch $args }
 New-Alias -Name gf -Value Get-GitFetch -Force -Option AllScope
@@ -246,6 +254,9 @@ New-Alias -Name gch -Value Get-GitCheckout -Force -Option AllScope
 function Get-GitCheckoutBranch { & git checkout -b $args }
 New-Alias -Name gchb -Value Get-GitCheckoutBranch -Force -Option AllScope
 
+function Get-GitPullRebase { & git pull --rebase $args }
+New-Alias -Name gpr -Value Get-GitPullRebase -Force -Option AllScope
+
 # function Get-GitBranch { & git branch $args }
 # New-Alias -Name gb -Value Get-GitBranch -Force -Option AllScope
 
@@ -254,4 +265,13 @@ New-Alias -Name gchb -Value Get-GitCheckoutBranch -Force -Option AllScope
 
 # function Get-GitRemoteAdd { & git remote add $args }
 # New-Alias -Name gra -Value Get-GitRemoteAdd -Force -Option AllScope
+
+# function Get-GitCherryPick { & git cherry-pick $args }
+# New-Alias -Name gcp -Value Get-GitCherryPick -Force -Option AllScope
+
+# function Get-GitCommitEdit { & git commit -ev $args }
+# New-Alias -Name gce -Value Get-GitCommitEdit -Force -Option AllScope
+
+# function Get-GitCommitAmend { & git commit --amend $args }
+# New-Alias -Name gca -Value Get-GitCommitAmend -Force -Option AllScope
 
