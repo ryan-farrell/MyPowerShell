@@ -27,15 +27,6 @@ Get-ChildItem "$OwnFunctionsDir\*.ps1" | ForEach-Object{.$_}
 Write-Host '_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_-_'
 Write-Host '' # Empty line
 
-# ****************************************************************************************** #
-# Set Alias for my own Cmdlets (See my own functions in my functions dir = $OwnFunctionsDir) #
-# ****************************************************************************************** #
-Set-Alias -name pubip -Value Get-PublicIP
-Set-Alias -name rmpm -Value Remove-PackMan
-Set-Alias -name uid -Value Get-UnixTime
-Set-Alias -name cheat -Value Start-CheatSheet
-Set-Alias -name myfunc -Value Get-MyFunc
-
 # ****************************************************** #
 # Using "oh-my-posh" to get a powershell theme and style #
 # ****************************************************** #

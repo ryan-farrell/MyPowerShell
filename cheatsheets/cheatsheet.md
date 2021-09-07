@@ -84,17 +84,6 @@ When using PHPUnit locally you will need to make some changes to teh phpunit.xml
 ---
 <br>
 
-## Markdown & Emoji Links
-
-[Markdown Cheat Sheet](https://www.markdownguide.org/cheat-sheet/)
-
-[Emoji Codes](https://www.webfx.com/tools/emoji-cheat-sheet/)
-
-
----
----
-<br>
-
 ## PR & Merge Process
 
 Once you have created the branch and have published your new feature branch to the origin you can initiate a pull request (PR). You can

@@ -178,7 +178,7 @@ Set-Alias -name myfunc -Value Get-MyFunc
 .DESCRIPTION
     Opens my cheat sheet for quick reference of adding to
 .EXAMPLE
-    Start-OpenVPN
+    Start-CheatSheet
 .INPUTS
     System.string
 .OUTPUTS
@@ -202,6 +202,37 @@ function Start-CheatSheet {
 
 } # Start-CheatSheet
 Set-Alias -name cheat -Value Start-CheatSheet
+
+<#
+.SYNOPSIS
+    Open my Markdown cheat sheet
+.DESCRIPTION
+    Opens my cheat sheet for quick reference for editing Markdown files
+.EXAMPLE
+    Start-MarkdownCheatSheet
+.INPUTS
+    System.string
+.OUTPUTS
+    None
+.NOTES
+    none
+#>
+function Start-MarkdownCheatSheet {
+    [CmdletBinding()]
+    param (
+    )
+
+    # Open the file after checking it exists
+    if (Test-Path "$env:USERPROFILE\Documents\MyPowerShell\cheatsheets\markdown-cheat-sheet.md") {
+        # Open File
+        Invoke-Item "$env:USERPROFILE\Documents\MyPowerShell\cheatsheets\markdown-cheat-sheet.md"
+    }
+    else {
+        Write-Error "The file could not be found."
+    }
+
+} # Start-CheatSheet
+Set-Alias -name markcheat -Value Start-MarkdownCheatSheet
 
 # ************************#
 # GIT commands & Aliases  #
@@ -241,9 +272,6 @@ New-Alias -Name gcpsh -Value Get-GitCommitPush -Force -Option AllScope
 
 function Get-GitTree { & git log --graph --oneline --decorate $args }
 New-Alias -Name gt -Value Get-GitTree -Force -Option AllScope
-
-
-
 
 function Get-GitFetch { & git fetch $args }
 New-Alias -Name gf -Value Get-GitFetch -Force -Option AllScope
