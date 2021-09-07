@@ -171,6 +171,9 @@ New-Alias -Name gt -Value Get-GitTree -Force -Option AllScope
 function Get-GitPush { & git push --follow-tags $args }
 New-Alias -Name gps -Value Get-GitPush -Force -Option AllScope
 
+function Get-GitCommitPush { & git add --all; git commit -m $args; git push }
+New-Alias -Name gcp -Value Get-GitCommitPush -Force -Option AllScope
+
 # function Get-GitPullRebase { & git pull --rebase $args }
 # New-Alias -Name gpr -Value Get-GitPullRebase -Force -Option AllScope
 
