@@ -35,7 +35,7 @@ Set-PoshPrompt -Theme slim
 
 ```
 
-Add the above to `"C:\Users\ryanf\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"` and save.
+Add the above to `"C:\Users\ryanf\Documents\PowerShell\Microsoft.PowerShell_profile.ps1"` (to quickly access use cmd `code $PROFILE`) and save.
 
 Reopen powershell and these functions will now be ready to use. 👍🏼
 
@@ -76,6 +76,10 @@ Once selected add this line with them name to load that theme `Set-PoshPrompt -T
 ```
 Set-PoshPrompt -Theme slim
 ```
----
+
+In the root dir `themes` I have created my first theme **neon_burn_rf44**.
+To use update theme name above and C&P the file `themes\neon_burn_rf44.omp.json` into the oh-my-posh themes directory in `C:\Users\ryanf\Documents\PowerShell\Modules\oh-my-posh\3.180.0\themes`
+
+
 # GIT Commands
 Added a large selection of GIT alias cmds for ease of use in PowerShell. Refer to the `my-functions.ps1` for more details or run the cmd `alias` to see all including the added GIT ones.
