@@ -143,6 +143,68 @@ Set-Alias -name uid -Value Get-UnixTime
 
 <#
 .SYNOPSIS
+    Get the failed job command. Just add the ID from the failed jobs table
+.DESCRIPTION
+    Simple way to have the failed job added to clipboard for simple paste
+.EXAMPLE
+    Get-FailedJobCmd
+.INPUTS
+    System.string
+.OUTPUTS
+    None
+.NOTES
+    none
+#>
+function Get-FailedJobCmd {
+    [CmdletBinding()]
+    param (
+    )
+    [Alias("fq")]
+
+    $cmd = "php artisan queue:retry "
+
+    # Save to clipboard
+    Set-Clipboard -Value $cmd
+
+    # This will create a UID which is saved to the clipboard
+    Write-Host "Cmd saved to the clipboard."
+
+} # Get-UnixTime
+Set-Alias -name fq -Value Get-FailedJobCmd
+
+<#
+.SYNOPSIS
+    Get the docker exec command for when we SSH into container
+.DESCRIPTION
+    Simple way to have the docker exec -it gaeapp /bin/sh added to clipboard for simple paste
+.EXAMPLE
+    Get-FailedJobCmd
+.INPUTS
+    System.string
+.OUTPUTS
+    None
+.NOTES
+    none
+#>
+function Get-DockerExecItCmd {
+    [CmdletBinding()]
+    param (
+    )
+    [Alias("dexec")]
+
+    $cmd = "docker exec -it gaeapp /bin/sh"
+
+    # Save to clipboard
+    Set-Clipboard -Value $cmd
+
+    # This will create a UID which is saved to the clipboard
+    Write-Host "Cmd saved to the clipboard."
+
+} # Get-UnixTime
+Set-Alias -name dexec -Value Get-DockerExecItCmd
+
+<#
+.SYNOPSIS
     Retrieve my Powershell functions file for adding or editing
 .DESCRIPTION
     Open my Powershell my-functions.ps1 file to edit or add additional functions on the go
