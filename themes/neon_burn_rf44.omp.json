@@ -99,16 +99,6 @@
             "stash_count_icon": "\uF692 ",
             "postfix": " \ue0b1"
           }
-        },
-        {
-          "type": "text",
-          "style": "plain",
-          "foreground": "#0abdc6",
-          "properties": {
-            "text": "\uE0b1 \uE0b1",
-            "prefix": "",
-            "postfix": ""
-          }
         }
       ]
     },
