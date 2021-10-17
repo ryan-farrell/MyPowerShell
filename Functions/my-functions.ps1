@@ -365,3 +365,10 @@ New-Alias -Name gpr -Value Get-GitPullRebase -Force -Option AllScope
 # function Get-GitCommitAmend { & git commit --amend $args }
 # New-Alias -Name gca -Value Get-GitCommitAmend -Force -Option AllScope
 
+
+# **************************#
+# NGROK commands & Aliases  #
+# **************************#
+
+function Start-NgrokTunnelForLaravel { & ngrok http 127.0.0.1:8000 $args }
+New-Alias -Name ngrun -Value Start-NgrokTunnelForLaravel -Force -Option AllScope
