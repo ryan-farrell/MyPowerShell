@@ -84,31 +84,6 @@ When using PHPUnit locally you will need to make some changes to teh phpunit.xml
 ---
 <br>
 
-## PR & Merge Process
-
-Once you have created the branch and have published your new feature branch to the origin you can initiate a pull request (PR). You can
-initiate this at anytime but generally when you have committed all your changes in dev. If you have initiated the PR before you have finished committing
-make sure the title of you PR begins with "`WIP - `".
-
-e.g. ` WIP - Feature/wk 1250 create worker strike types` & add the label **"DO NOT PUSH :skull_and_crossbones:"**
-
-This will ensure that no review will begin an more importantly stop and accidentally merge of this branch back into dev.
-
-Now once you have finished your initial comments under Description Changes you can remove the `WIP - ` from the title and remove any labels adding **"awaiting review"**
-label. Assign to a reviewer if pre arranged or add a comment to *#engineering* slack channel or bring up in stand up when walking the board.
-
-Once your story has been reviewed make any changes required and comment on the individual change if required. In the comment section and mention the reviewer **"@"** and comment the changes
-you have made or not and why. Re add the **"awaiting review"** label remove any none required labels and click the **"Re-request Review :arrows_clockwise:"**.
-
-Once you have been informed that your branch can be merged you should see the **"Merge Pull Request"** button is available. Click and it should merge with develop branch and delete the
-feature branch you've been working on.
-
-Update ticket in **YouTrack** with additional time and move ticket from ***In Review*** into ***Pending Deployment***.
-
----
----
-<br>
-
 ## Product Request Workflow
 
 Ask yourself is this a further reaching issue other than the individual or bug the ticket is about?
@@ -189,6 +164,8 @@ Check https://gitlab.com/Broadstone-Engage/broadstone-api/-/jobs for completion 
 Now to add the tag to this branch. In Git graph make sure to use the `Fetch all remotes` icon top right and you should see the hotfix branch you created merged back into master at the top of the tree
 ready to tag. Right click and tag branch with new version number. **!Make sure to use lowercase v NOT upper!**
 
+Tick to push tag to remote!
+
 Log into GCP:
 
 **Goto App Engine >> Instances**
@@ -205,7 +182,7 @@ or and use the `docker exec -it gaeapp /bin/sh` (Here at : http://intranet.broad
 
 All commands? Run check live DB if was involved.
 
-Now we can migrate main URL when it matches!
+Now we can migrate main URL when it matches! **!!! NOTE - CURRENTLY MIGRATIONS ARE NOT PORTING TO REPLICA DB PLEASE CHECK REPLICA AFTER RELEASE IF WE RAN A MIGRATION !!!** 
 
 Migrate (https://api.orka.works/ = Our API Everything uses this) over to new version - Check the box of the current instance and select `Split Traffic` choose Add version (if the new version doesn't show) and select new
 version to migrate to and set to 100% instantly.
@@ -214,4 +191,37 @@ Refresh URL until it confirms change.
 
 Update Orka Works slack channel that Hotfix has been released.
 
-Stop old version saves Orka money - Check the box and click STOP!
+Stop old version saves Orka money - Check the box and click STOP! **LEAVE FOR AT LEAST 10MINS BECAUSE OF LOAD BALANCER BEFORE YOU STOP!!**
+
+# Laravel Caching Example
+
+```
+// Create our empty response and pass into the cache in case of error we can return this
+// with details of error for error handling
+$defaultWorkerStatusResponse = $this->defaultWorkerStatusResponse(true);
+
+// If the cache has the response from Orka Check in the last 5 minutes it will use that response
+// otherwise it will request Orka Check for an updated worker Status Response. If MQ errors the
+// exception thrown will cause us to check the DB for a record to use.
+$workerStatusResponse = Cache::remember(
+    'job_profile_'. $jobProfile->uuid .'_worker_status_check',  // << The value of the property held in Redis Cache
+    300,  // << in seconds so e.g. 5 mins
+
+    // The anonymous function must return something to the cache, and you must pass in most thing to the anonymous function to avoid PHP serialise error
+    function () use ($jobProfile, $defaultWorkerStatusResponse) {
+        // Get response from OrkaCheck using RabbitMQ
+        try {
+            return (new MQMessage(null, false))
+                ->send('worker', 'users.workerStatus', $jobProfile->uuid);
+        } catch (\Exception $e) {
+            Log::error('Response from microservice with error: ' . $e->getMessage());
+
+            // Add the details of the error and return
+            $defaultWorkerStatusResponse->error_message = $e->getMessage();
+            $defaultWorkerStatusResponse->error_code = $e->getCode();
+            return $defaultWorkerStatusResponse;
+        }
+    }
+);
+
+```

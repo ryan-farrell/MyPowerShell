@@ -205,6 +205,37 @@ Set-Alias -name dexec -Value Get-DockerExecItCmd
 
 <#
 .SYNOPSIS
+    Retrieve my .dbt profile
+.DESCRIPTION
+    Open my .dbt my profiles.yml file to edit or add additional configurations
+.EXAMPLE
+    Get-DbtProfile
+.INPUTS
+    System.string
+.OUTPUTS
+    None
+.NOTES
+    none
+#>
+function Get-DbtProfile {
+    [CmdletBinding()]
+    param (
+    )
+
+    # Open the file after checking it exists
+    if (Test-Path "$env:USERPROFILE\.dbt\profiles.yml") {
+        # Open File
+        Invoke-Item "$env:USERPROFILE\.dbt\profiles.yml"
+    }
+    else {
+        Write-Error "The file could not be found."
+    }
+
+} # Get-DbtProfile
+Set-Alias -name dbtprofile -Value Get-DbtProfile
+
+<#
+.SYNOPSIS
     Retrieve my Powershell functions file for adding or editing
 .DESCRIPTION
     Open my Powershell my-functions.ps1 file to edit or add additional functions on the go
@@ -372,3 +403,12 @@ New-Alias -Name gpr -Value Get-GitPullRebase -Force -Option AllScope
 
 function Start-NgrokTunnelForLaravel { & ngrok http 127.0.0.1:8000 $args }
 New-Alias -Name ngrun -Value Start-NgrokTunnelForLaravel -Force -Option AllScope
+
+
+# ******************************#
+# Work Flow commands & Aliases  #
+# ******************************#
+
+function Get-ComposerUpdatesWorkFlow { & composer update --ignore-platform-reqs $args }
+New-Alias -Name comup -Value Get-ComposerUpdatesWorkFlow -Force -Option AllScope
+
