@@ -139,6 +139,7 @@ Use cmd `php artisan queue:retry FAILED_JOB_ID_HERE` to re run a failed job from
 # Release Worker API Notes (Hotfix):
 
 http://intranet.broadstoneapp.com/wiki/API_Release  - WIKI Release Notes
+http://intranet.broadstoneapp.com/wiki/Works_API_Releases_(Non-Breaking_Changes)
 
 Create a branch of origin/master locally
 
@@ -165,6 +166,16 @@ Now to add the tag to this branch. In Git graph make sure to use the `Fetch all 
 ready to tag. Right click and tag branch with new version number. **!Make sure to use lowercase v NOT upper!**
 
 Tick to push tag to remote!
+
+Approx timings of Git Lab deployment in jobs:
+
+- phpstan 3 mins
+- unit_tests 1 min
+- unit_test_legacy 3 mins
+- test_documentation 30 secs
+- deploy: 12 mins
+
+Total approx 20 mins from arrival in Gitlab jobs queue
 
 Log into GCP:
 
@@ -225,3 +236,93 @@ $workerStatusResponse = Cache::remember(
 );
 
 ```
+
+
+# Resetting Password in Developer DB
+
+You need the token property for the payload to send to this URL.
+
+```
+curl --location --request POST 'localhost:8000/user/password/reset' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "ryan.farrell@orka.group",
+    "password": "NewPASSWQORD!",
+    "password_confirmation": "NewPASSWQORD!",
+    "token": "928135"
+}'
+```
+
+Dump out the token as below when you hit this endpoint
+
+```
+curl --location --request POST 'localhost:8000/user/password/forgot' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username":"ryan.farrell@orka.group"
+}'
+```
+
+Place the `dump();` as below in the `createNewToken()`:
+
+File and method found in `packages\Injector\Api\User\Helpers\PasswordTokenRepository.php`
+
+```
+use Illuminate\Auth\Passwords\DatabaseTokenRepository;
+use Illuminate\Auth\Passwords\TokenRepositoryInterface;
+
+class PasswordTokenRepository extends DatabaseTokenRepository implements TokenRepositoryInterface
+{
+    /**
+     * Create a new token for the user.
+     *
+     * @return string
+     */
+    public function createNewToken()
+    {
+        $foo = mt_rand(100000, 999999);
+        dump($foo);
+        return $foo;
+    }
+}
+```
+
+# Environment Setup Cmd For Individual Terminals
+- php artisan serve
+- redis-server
+- php artisan queue:work --tries=3 --queue=notifications
+- php artisan queue:work --tries=3 --queue=default
+- // php artisan injector:nats:listen (no longer needed)
+
+
+# Monthly Payroll
+
+- Complete Checks on the wiki
+
+- Ensure all billing amendments are complete
+
+- Make sure your using the `broadstone-api-monthly-payroll` repo
+- Git fetch / pull to update the master branch of this
+- .env is setup to run with production. Any changes to .env will need to be applied here
+- Set up environment
+    - Run `reddis serve` (always first)
+    - The web serve `php artisan serve`
+    - The queues `php artisan queue:work redis --tries=3 --delay=3`
+
+
+# Before
+docker run --name redis-container -p 6379:6379 redis:5-alpine3.15
+
+# After
+docker ps
+docker container kill <Container ID>
+docker container rm redis-container
+
+
+# Eager Loading / Query Building
+Lets always eager load going forward with query builders. The `$query->with([])`
+will let you define relationships to get at the start and with the first hit on the db. And lets force Laravel to stop Lazy Loading later in the endpoint.
+
+See example in file `packages\Injector\Api\Companies\Applications\Repositories\ApplicationRepository.php` in the `ApplicationRepository::getWorkerApplications()` method of its use and why we verbosely bring in all relationships at the start to force the issue of NOT Lazy loading later on.
+
+You can also `dump(get_log_sql($queryLog));` in the `RequestHealthCheckLogger::logEvent()` method to see the individual queries as well as the HealthCheck details in the Lumen log always produced with each request.

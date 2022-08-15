@@ -400,15 +400,48 @@ New-Alias -Name gpr -Value Get-GitPullRebase -Force -Option AllScope
 # **************************#
 # NGROK commands & Aliases  #
 # **************************#
-
 function Start-NgrokTunnelForLaravel { & ngrok http 127.0.0.1:8000 $args }
 New-Alias -Name ngrun -Value Start-NgrokTunnelForLaravel -Force -Option AllScope
+
+# ****************************#
+# Python Virtual Environments #
+# ****************************#
+<#
+.SYNOPSIS
+    Start the python environment for the dbt project
+.DESCRIPTION
+    Start the python environment for the dbt project
+.EXAMPLE
+    Start-DbtPythonEnvironment
+.INPUTS
+    System.string
+.OUTPUTS
+    None
+.NOTES
+    none
+#>
+function Start-DbtPythonEnvironment {
+    [CmdletBinding()]
+    param (
+    )
+
+    # Open the file after checking it exists
+    if (Test-Path "c:\work\orka-datawarehouse-dbt\dbt-env\Scripts\Activate.ps1") {
+        # Run Script to Activate my dbt centric Python Environment
+        & c:\work\orka-datawarehouse-dbt\dbt-env\Scripts\Activate.ps1
+    }
+    else {
+        Write-Error "The file could not be found. Check the directory setup of the Dbt project"
+    }
+
+} # Get-DbtProfile
+Set-Alias -name dbtenv -Value Start-DbtPythonEnvironment
 
 
 # ******************************#
 # Work Flow commands & Aliases  #
 # ******************************#
 
-function Get-ComposerUpdatesWorkFlow { & composer update --ignore-platform-reqs $args }
-New-Alias -Name comup -Value Get-ComposerUpdatesWorkFlow -Force -Option AllScope
+function Get-ComposerUpdatesWorkFlow { & composer install --ignore-platform-reqs $args }
+New-Alias -Name compin -Value Get-ComposerUpdatesWorkFlow -Force -Option AllScope
 
