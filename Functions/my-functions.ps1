@@ -342,8 +342,8 @@ New-Alias -Name ga -Value Get-GitAdd -Force -Option AllScope
 function Get-GitAddAll { & git add --all $args }
 New-Alias -Name gaa -Value Get-GitAddAll -Force -Option AllScope
 
-# function Get-GitUndoAdd { & git reset --soft $args }
-# New-Alias -Name gua -Value Get-GitUndoAdd -Force -Option AllScope
+function Get-GitUndoAdd { & git reset --soft $args }
+New-Alias -Name gua -Value Get-GitUndoAdd -Force -Option AllScope
 
 function Get-GitCommit { & git commit -m $args }
 New-Alias -Name gc -Value Get-GitCommit -Force -Option AllScope
