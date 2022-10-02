@@ -364,7 +364,10 @@ function Get-GitCommitPush { & git add --all; git commit -m $args; git push }
 New-Alias -Name gcpsh -Value Get-GitCommitPush -Force -Option AllScope
 
 function Get-GitTree { & git log --graph --oneline --decorate $args }
-New-Alias -Name gt -Value Get-GitTree -Force -Option AllScope
+New-Alias -Name gtree -Value Get-GitTree -Force -Option AllScope
+
+function Get-GitTag { & git tag $args }
+New-Alias -Name gt -Value Get-GitTag -Force -Option AllScope
 
 function Get-GitFetch { & git fetch $args }
 New-Alias -Name gf -Value Get-GitFetch -Force -Option AllScope
