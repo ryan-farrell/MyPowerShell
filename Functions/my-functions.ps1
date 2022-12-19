@@ -403,6 +403,28 @@ New-Alias -Name gpr -Value Get-GitPullRebase -Force -Option AllScope
 function Start-NgrokTunnelForLaravel { & ngrok http 127.0.0.1:8000 $args }
 New-Alias -Name ngrun -Value Start-NgrokTunnelForLaravel -Force -Option AllScope
 
+
+# ***************************#
+# GCLOUD commands & Aliases  #
+# ***************************#
+function Start-GcloudAppEngineListOfInstances { & gcloud app instances list --project "broadstone-servers" $args }
+Set-Alias -Name appengls -Value Start-GcloudAppEngineListOfInstances -Force -Option AllScope
+
+function Start-GcloudAppEngineSSH {
+    [CmdletBinding()]
+    param (
+        [Parameter(Mandatory = $true)]
+        [string] $appid,
+
+        [Parameter(Mandatory = $true)]
+        [string] $version
+    )
+
+    & gcloud app instances ssh "aef-default-v$appid" --container="gaeapp" --service "default" --version "v$version" --project "broadstone-servers"
+}
+Set-Alias -Name appeng -Value Start-GcloudAppEngineSSH -Force -Option AllScope
+
+
 # ****************************#
 # Python Virtual Environments #
 # ****************************#
@@ -436,7 +458,6 @@ function Start-DbtPythonEnvironment {
 
 } # Get-DbtProfile
 Set-Alias -name dbtenv -Value Start-DbtPythonEnvironment
-
 
 # ******************************#
 # Work Flow commands & Aliases  #
